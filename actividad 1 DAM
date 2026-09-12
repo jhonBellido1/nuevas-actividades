@@ -1,0 +1,99 @@
+void main() {
+ 
+  final persona1 = Persona(
+    nombre: 'isaac',
+    apellido: 'sierra',
+    edad: 20,
+    profesion: 'Futuro ingeniero de sistemas',
+  );
+  print(persona1);
+
+  final Map<String, dynamic> rawJson = {
+    'nombre': 'sofia',
+    'apellido': 'perez ',
+    'edad': 21,
+  };
+  final persona2 = Persona.fromJson(rawJson);
+  print(persona2);
+
+
+
+  print('hola ${persona1.nombre}, tu apellido es ${persona1.apellido}');
+  print('el proximo año tendrás ${persona1.edad + 1} años');
+
+  print(saludarPersona(persona1)); 
+  print(obtenerFechaActual()); 
+
+
+  
+  print(esMayorDeEdad(persona1)); 
+  print(esMayorDeEdad(persona2)); 
+  print(mensajeBienvenida()); 
+}
+
+
+
+// 1) Crear una clase Persona con los atributos de su preferencia.
+
+class Persona {
+  String nombre;
+  String apellido;
+  int edad;
+  String profesion;
+
+  // 2) Crear un constructor que reciba dichos  atributos.
+
+  Persona({
+    required this.nombre,
+    required this.apellido,
+    required this.edad,
+    this.profesion = 'ninguna',
+  });
+
+  
+  // 3) Crear un constructor por nombre personalizado que reciba datos en forma JSON.
+ 
+  Persona.fromJson(Map<String, dynamic> json)
+      : nombre = json['nombre'] ?? 'nombre no encontrado',
+        apellido = json['apellido'] ?? 'apellido no encontrado',
+        edad = json['edad'] ?? 0,
+        profesion = json['profesion'] ?? 'sin profesión';
+
+
+  // 4) Imprimir en consola haciendo uso de interpolación de string.
+  
+  @override
+  String toString() {
+    return 'Persona: $nombre $apellido, ${edad} años, profesión: $profesion';
+    
+  }
+}
+
+
+// 5) Crear dos funciones tradicionales una con parámetros y otra sin parámetros.
+
+
+  // con parámetros 
+String saludarPersona(Persona persona) {
+  return 'hola, ${persona.nombre} ${persona.apellido}';
+}
+
+   // sin parámetros
+String obtenerFechaActual() {
+  final ahora = DateTime.now();
+  return 'fecha actual: ${ahora.day}/${ahora.month}/${ahora.year}';
+}
+
+
+// 6) Crear dos funciones de flecha una con parámetros y otra sin parámetros.
+
+// con parámetros 
+
+String esMayorDeEdad(Persona persona) =>
+    persona.edad >= 18 ? '${persona.nombre} es mayor de edad': 
+
+'${persona.nombre} es menor de edad';
+
+// sin parámetros 
+
+String mensajeBienvenida() => 'Bienvenido :) ';
