@@ -1,15 +1,15 @@
 void main() {
  
   final persona1 = Persona(
-    nombre: 'isaac',
-    apellido: 'sierra',
-    edad: 20,
-    profesion: 'Futuro ingeniero de sistemas',
+    nombre: 'jhon',
+    apellido: 'bellido',
+    edad: 22,
+    profesion: 'ingeniero de sistemas',
   );
   print(persona1);
 
   final Map<String, dynamic> rawJson = {
-    'nombre': 'sofia',
+    'nombre': 'andrea',
     'apellido': 'perez ',
     'edad': 21,
   };
