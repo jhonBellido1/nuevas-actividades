@@ -1,0 +1,61 @@
+import 'dart:math';
+
+class PedidoNoEncontrado implements Exception {
+  String toString() => 'pedido no encontrado';
+}
+
+class Pedido {
+  int id;
+  String nombre;
+
+  Pedido(this.id, this.nombre);
+
+  String toString() => 'Pedido $id: $nombre';
+}
+
+class ServicioPedidos {
+  Future<Pedido> buscarPedido(int id) async {
+    await Future.delayed(Duration(seconds: Random().nextInt(2) + 1));
+
+    if (Random().nextInt(10) == 0) {
+      throw 'error error de conexion :( )';
+    }
+
+    if (id > 5) {
+      throw PedidoNoEncontrado();
+    }
+
+    return Pedido(id, 'Producto $id');
+  }
+
+  Future<List<Pedido>> buscarVariosPedidos(List<int> ids) {
+    return Future.wait(ids.map((id) => buscarPedido(id)));
+  }
+}
+
+void main() async {
+  print('espera un momento');
+
+  final servicio = ServicioPedidos();
+
+  try {
+    final pedido = await servicio.buscarPedido(2)
+        .timeout(const Duration(seconds: 2));
+
+    print(pedido);
+  } catch (err) {
+    print('hay un error :( ): $err');
+  }
+
+  try {
+    final pedidos = await servicio
+        .buscarVariosPedidos([1, 2, 3])
+        .timeout(const Duration(seconds: 2));
+
+    print(pedidos);
+  } catch (err) {
+    print('hay un error :( : $err');
+  }
+
+  print('Fin ');
+}
